@@ -1,0 +1,32 @@
+<div class="row admin-pad">
+	<div class="col-xs-12 col-md-5 col-md-offset-1 admin-border admin-pad height">
+		<h4>{{entry.headLine}}</h4>
+		<p>{{entry.date | date:longDate}}</p>
+		<p>{{entry.body}}</p>
+	</div>
+	<div class="col-xs-12 col-md-5 col-md-offset-1 admin-border admin-pad height">
+		<p>"{{review.body}}"</p>
+		<h5>{{review.name}}</h5>
+	</div>
+</div>
+<div class="row admin-pad">
+	<div class="col-xs-12 col-md-5 col-md-offset-1 admin-border admin-pad height">				
+		<form class="submit">
+			<label>Entry Date</label>
+			<input class="admin-input"type="date" ng-model="entry.date">
+			<label>Headline</label>
+			<input class="admin-input" type="text" ng-model="entry.headLine" placeholder="Headline">
+			<textarea class="admin-input" cols="45" rows="7" ng-model="entry.body" placeholder="Enter you blog post here."></textarea>
+			<button class="btn btn-success" type="submit" ng-click="submitBlog()">Submit</button>
+		</form>
+	</div>
+	
+	<div class="col-xs-12 col-md-5 col-md-offset-1 admin-border admin-pad height">
+		<form class="submit">
+			<label>First Name and City</label>
+			<input class="admin-input" type="text" ng-model="review.name" placeholder="First name, City">
+			<textarea class="admin-input" cols="45" rows="6" ng-model="review.body" placeholder="Enter your positive reviews here."></textarea>
+			<button class="btn btn-success" type="submit" ng-click="submitTestimony()">Submit</button>
+		</form>
+	</div>
+</div>

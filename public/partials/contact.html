@@ -1,0 +1,22 @@
+<div class="">	
+	<h2>Contact Us</h2>
+	<form class="submit">
+		<div class="block">
+			<label class="labels">Name</label>
+			<input class="forms" type="text" ng-model="customer.name" placeholder="First and Last Name">
+		</div>	
+		<div class="block">
+			<label class="labels">Phone#</label>
+			<input class="forms" type="tel" ng-model="customer.number" placeholder="xxx-xxx-xxxx">
+		</div>	
+		<div class="block">	
+			<label class="labels">Email</label>
+			<input class="forms" type="email" ng-model="customer.email" placeholder="email@domain.com">
+		</div>
+		<div class="block">
+			<label class="block">What can we help you with?</label>
+			<textarea ng-model="customer.body" cols="50" rows="5" placeholder="Questions or Comments"></textarea>
+		</div>	
+			<div type="button" class="contact">Contact Us</div>
+	</form>
+</div>
