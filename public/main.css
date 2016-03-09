@@ -2,6 +2,13 @@
 	height: 175px;
 	background-color: #ca8a61;
 	margin-top: -20px;
+	color: #54321C;
+	font-weight: bold;
+	font-family: copperplate;
+	font-size: 30px;
+}
+.header p {
+	margin-top:auto;
 }
 .carousel-background {
 	background-color: #f0dfd3;
@@ -66,4 +73,7 @@
 	color: #54321C;
 	text-align: center;
 }
-
+.admin-input {
+	border-radius: 5px;
+	margin-top: 8px;
+}

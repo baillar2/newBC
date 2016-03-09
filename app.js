@@ -67,7 +67,28 @@ app.get('/', function(req, res){
     res.sendFile('/index.html', {root: './public'})
 })
 app.get('/admin', function(req, res){
-	res.sendFile('/admin.html', {root: './public'})
+	console.log(req.body)
+    if(!req.body.user){
+        console.log('login sucka')
+        res.sendFile('login.html', {root: './public'})
+    }
+    else{
+        console.log('your logged on')
+        res.sendFile('admin.html', {root: './public'})
+    }
+})
+app.get('/me', function(req, res){
+    res.send({user:req.user})
+})
+app.get('/loginpage', function(req, res){
+    res.sendFile('login.html',{root: './public'})
+})
+app.get('/logout', function(req, res){
+    req.logout()
+    res.redirect('/')
+})
+app.get('/login', function(req, res){
+    res.sendFile('/login.html', {root: './public'})
 })
 app.post('/signUp', function(req, res){
     console.log('server signup log', req.body)
@@ -76,15 +97,11 @@ app.post('/signUp', function(req, res){
 app.post('/logIn', function(req, res){
     controller.userLogin(req, res)
 })
-app.get('/me', function(req, res){
-    res.send({user: req.user})
+app.post('/imgremove', function(req, res){
+
 })
-app.get('/loginpage', function(req, res){
-    res.sendFile('login.html',{root: './public'})
-})
-app.get('/logout', function(req, res){
-    req.logout()
-    res.redirect('/')
+app.post('/api/submitblog', function(req, res){
+    controller.newBlog(req, res)
 })
 //LISTEN\\
 
