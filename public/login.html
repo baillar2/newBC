@@ -6,10 +6,9 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
 </head>
 <body ng-controller="loginController">
-	<div class="container-fluid">
-		<div class="row header">
-		</div>
-		<div class="row carousel-background">
+	<div ng-include="'partials/header.html'"></div>
+	<div class="container-fluid carousel-background" style="height:600px">
+		<div class="row ">
 			<div class="col-xs-6 col-xs-offset-3">	
 				<form class="form-inline" ng-submit="signUp()">
 				    <div class="form-group">
@@ -38,6 +37,7 @@
 			</div>
 		</div>		
 	</div>	
+	<div ng-include="'partials/footer.html'"></div>
 </body>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.js"></script>

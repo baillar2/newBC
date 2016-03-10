@@ -1,22 +1,26 @@
-<div class="">	
+<div class="row">	
 	<h2>Contact Us</h2>
-	<form class="submit">
-		<div class="block">
-			<label class="labels">Name</label>
-			<input class="forms" type="text" ng-model="customer.name" placeholder="First and Last Name">
-		</div>	
-		<div class="block">
-			<label class="labels">Phone#</label>
-			<input class="forms" type="tel" ng-model="customer.number" placeholder="xxx-xxx-xxxx">
-		</div>	
-		<div class="block">	
-			<label class="labels">Email</label>
-			<input class="forms" type="email" ng-model="customer.email" placeholder="email@domain.com">
+	<form class="form-horizontal has-warning has-success col-xs-10" ng-submit="submitCust()">
+		<div class="form-group">
+			<label for="customerName">Name</label>
+			<input type="text" class="form-control" ng-modal="cust.name" placeholder="Jane Doe">
 		</div>
-		<div class="block">
-			<label class="block">What can we help you with?</label>
-			<textarea ng-model="customer.body" cols="50" rows="5" placeholder="Questions or Comments"></textarea>
-		</div>	
-			<div type="button" class="contact">Contact Us</div>
+		<div class="form-group">
+			<label for="customerEmail">Email</label>
+			<input type="email" class="form-control" ng-modal="cust.email" placeholder="jane.doe@example.com">
+		</div>
+		<div class="form-group">
+			<label for="customerNumber">Phone Number</label>
+			<input type="tel" class="form-control" ng-modal="cust.number" placeholder="555-555-5555">
+		</div>
+		<div class="form-group">
+	    	<label for="entryContent">Entry Content</label>
+	    	<textarea type="text" class="form-control" ng-model="cust.query" placeholder="Content" rows="4"></textarea> 
+	    </div>  
+		    <button type="submit" class="btn btn-default" style="display:block">Send</button>
 	</form>
 </div>
+
+
+
+

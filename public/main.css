@@ -1,11 +1,24 @@
+body {
+	padding-top: 50px;
+}
+.color {
+	color: #54321C;
+}
 .header {
 	height: 175px;
-	background-color: #ca8a61;
-	margin-top: -20px;
+	background-image: linear-gradient(#ca8a61, #f0dfd3);
 	color: #54321C;
 	font-weight: bold;
 	font-family: copperplate;
 	font-size: 30px;
+}
+.logo {
+	max-height: 175px;
+	display: inline-block;
+}
+.center {
+	text-align: center;
+	padding-top: 20px;
 }
 .header p {
 	margin-top:auto;
@@ -14,12 +27,13 @@
 	background-color: #f0dfd3;
 }
 .content {
-	height: 600px;
+	min-height: 500px;
 	background-color: #f9f2ed;
 }
 .miniBtn {
 	border: medium solid #54321c;
     width: 150px;
+    background-image: linear-gradient(#ca8a61, #f0dfd3);
     border-radius: 30px;
     height: 50px;
     margin:30% 0;
@@ -56,6 +70,7 @@
     width: 150px;
     border-radius: 30px;
     height: 50px;
+    background-image: linear-gradient(#ca8a61, #f0dfd3);
     font-size: 20px;
     text-align: center;
 	padding-top: 2%;
@@ -67,8 +82,11 @@
 	margin-top: 10%;	
 	font-size: 16px;
 }
+.serviceList, li {
+	padding-bottom: 5%;
+}
 .footer{
-	height: 50px;
+	min-height: 50px;
 	background-color: #E0E0E0;
 	color: #54321C;
 	text-align: center;

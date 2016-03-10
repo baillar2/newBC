@@ -67,15 +67,7 @@ app.get('/', function(req, res){
     res.sendFile('/index.html', {root: './public'})
 })
 app.get('/admin', function(req, res){
-	console.log(req.body)
-    if(!req.body.user){
-        console.log('login sucka')
-        res.sendFile('login.html', {root: './public'})
-    }
-    else{
-        console.log('your logged on')
-        res.sendFile('admin.html', {root: './public'})
-    }
+     res.sendFile('admin.html', {root: './public'})    
 })
 app.get('/me', function(req, res){
     res.send({user:req.user})
@@ -90,6 +82,12 @@ app.get('/logout', function(req, res){
 app.get('/login', function(req, res){
     res.sendFile('/login.html', {root: './public'})
 })
+app.get('/api/blogContent', function(req, res){
+    controller.getBlog(req, res)
+})
+app.get('/api/imageContent', function(req, res){
+    controller.getImage(req, res)
+})
 app.post('/signUp', function(req, res){
     console.log('server signup log', req.body)
     controller.userSignup(req, res)
@@ -98,10 +96,16 @@ app.post('/logIn', function(req, res){
     controller.userLogin(req, res)
 })
 app.post('/imgremove', function(req, res){
-
+    controller.imgRemove(req, res)
+})
+app.post('/blogremove', function(req, res){
+    controller.blogRemove(req, res)
 })
 app.post('/api/submitblog', function(req, res){
     controller.newBlog(req, res)
+})
+app.post('/api/customer', function(req, res){
+    controller.newCustomer(req, res)
 })
 //LISTEN\\
 
