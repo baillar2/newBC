@@ -4,6 +4,7 @@ var bcrypt = require('bcryptjs')
 var passport = require('passport')
 var Photo = require('../models/image.js')
 var Customer = require('../models/customer.js')
+var sendgrid = require('sendgrid')(accessKey)
 function userSignup (req, res){
 	console.log('controller signup', req.body.username, req.body.password)
     bcrypt.genSalt(11, function(error, salt){
@@ -120,18 +121,33 @@ function blogRemove (req, res){
     })
 }
 function newCustomer (req, res){
+    console.log(req.body)
     var person = new Customer({
         name: req.body.name, 
         email: req.body.email, 
         number: req.body.number, 
         query: req.body.query
     })
-    person.save(function(err, person){
+    person.save(function(err, client){
         if(err){
+            console.log('save error', err)
             res.send({err: err})
         }
         else{
-            res.json(person)
+            console.log('start of else',client)
+            sendgrid.send({
+                to: 'seanpbaillargeon@gmail.com',
+                from: client.email,
+                subject: 'New Information Request',
+                text: client.query + ' from: ' + client.name + ' phone number:' + client.number
+            }, function(err, json){
+                if(err){
+                    return console.log('sendgrid error',err)
+                }
+                console.log('sendgrid success object', json)
+            })
+           
+            res.json(client)
         }
     })
 }

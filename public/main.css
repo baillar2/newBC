@@ -28,7 +28,8 @@ body {
 }
 .content {
 	min-height: 500px;
-	background-color: #f9f2ed;
+	/*background-color: #f9f2ed;*/
+	background-image: linear-gradient(#f0dfd3, #f9f2ed);
 }
 .miniBtn {
 	border: medium solid #54321c;

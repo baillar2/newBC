@@ -26,13 +26,16 @@ angular.module('app')
 					}
 				})
 		}
-		s.submitblog = function(){
-			$http.post('/api/customer', s.cust)
+		s.submitCust = function(){
+			$http.post('/api/customer', s.cust)				
 				.then(function(serverData){
-
+					console.log('then statement')
+					if(serverData.data){
+						$('#emailmodal').modal()
+						console.log(serverData.data)
+					}
 				})
-
-		}
+		}		
 	}])
 angular.module('app')	
 	.controller('adminController', ['$scope', '$http', 'factory',  function($scope, $http, factory){
@@ -78,7 +81,8 @@ angular.module('app')
 							s.blogArray = factory.blogArray.reverse()
 							})
 				})
-		}		
+		}
+		
 	}])
 angular.module('app')	
 	.controller('loginController', ['$scope', '$http', 'factory', function($scope, $http, factory){

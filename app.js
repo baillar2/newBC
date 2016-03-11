@@ -5,7 +5,7 @@ var mongoose = require('mongoose')
 var controller = require('./controllers/controller.js')
 var logger = require('morgan')
 var express = require('express')
-
+var sendgrid = require('sendgrid')
 //CREATE EXPRESS APP\\
 var app = express();
 mongoose.connect('mongodb://localhost/bcDB')
@@ -107,6 +107,7 @@ app.post('/api/submitblog', function(req, res){
 app.post('/api/customer', function(req, res){
     controller.newCustomer(req, res)
 })
+
 //LISTEN\\
 
 var port = 3000
