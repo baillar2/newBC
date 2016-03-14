@@ -38,8 +38,14 @@ angular.module('app')
 		}		
 	}])
 angular.module('app')	
-	.controller('adminController', ['$scope', '$http', 'factory',  function($scope, $http, factory){
+	.controller('adminController', ['$scope', '$http', 'factory', 'Upload', function($scope, $http, factory, Upload){
 		var s = $scope
+		s.image = {}
+		s.entry = {}
+		s.resizeCheck = function(image, width, height){
+			return width > 800 || height > 400
+		}
+
 		$http.get('/api/blogContent')
 			.then(function(serverData){
 				factory.blogArray = serverData.data				
@@ -49,12 +55,31 @@ angular.module('app')
 			.then(function(serverData){
 				factory.imageArray = serverData.data				
 				s.imageArray = factory.imageArray
+			})
+		$http.get('/api/clientContent')
+			.then(function(serverData){
+				factory.clientArray = serverData.data				
+				s.clientArray = factory.clientArray
+			})
+		s.submitImage = function(){
+			var uploader = Upload.upload({
+				url: '/api/image',
+				data : {
+					file : s.image
+				}
 			})	
+			uploader.then(function(serverData){
+				console.log(serverData)
+				factory.imageArray.push(serverData.data)
+				s.imageArray = factory.imageArray
+			})
+		}
+		
 		s.logOut = function(){
 			$http.get('/logout')	
 		}
-		s.imgRemove = function(){
-			$http.post('/imgremove')
+		s.imgRemove = function(photo){
+			$http.post('/api/imgremove', photo)
 				.then(function(serverData){
 					console.log(serverData.data)
 					$http.get('/api/imageContent')
@@ -65,11 +90,19 @@ angular.module('app')
 				})
 		}
 		s.submitBlog = function(){
-			$http.post('/api/submitblog', s.entry)
-				.then(function(serverData){
-					factory.blogArray.push(serverData.data)
-					s.blogArray = factory.blogArray.reverse()
-				})
+			console.log(s.entry)
+			var uploader = Upload.upload({
+								url:'/api/submitblog',
+								data: {
+									file: s.entry.file.file,
+									data: s.entry
+								}
+							})
+			uploader.then(function(serverData){
+				factory.blogArray.push(serverData.data)
+				s.blogArray = factory.blogArray
+			})
+			
 		}
 		s.blogRemove = function(){
 			$http.post('/blogremove')

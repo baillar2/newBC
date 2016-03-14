@@ -4,7 +4,41 @@ var bcrypt = require('bcryptjs')
 var passport = require('passport')
 var Photo = require('../models/image.js')
 var Customer = require('../models/customer.js')
-var sendgrid = require('sendgrid')(accessKey)
+var sendgrid = require('sendgrid')('key')
+var s3 = require('s3')
+s3Client = s3.createClient({
+    s3Options:{
+        accessKeyId: 'key',
+        secretAccessKey: 'key', 
+    }
+})
+function imageLoad(req, res){
+        console.log('imageload', req.files)
+    var file = req.files.file.file
+    console.log('image load two', file)
+    var uploader = s3Client.uploadFile({
+        localFile: file.path,
+        s3Params:{
+            Bucket:'bearcreeklandscape',
+            Key: file.name,
+            ACL : 'public-read',
+            ContentType: file.type,
+        }
+    })
+    uploader.on('progress', function(){
+        console.log('progress', uploader.progressAmount, uploader.progressTotal)
+    })
+    uploader.on('end', function(){
+        console.log('end', file.name)
+        var imageUrl = s3.getPublicUrlHttp('bearcreeklandscape', file.name)
+        var photo = new Photo({
+            url: imageUrl
+        })
+        photo.save(function(err, image){
+            res.send(image)
+        })
+    })
+}
 function userSignup (req, res){
 	console.log('controller signup', req.body.username, req.body.password)
     bcrypt.genSalt(11, function(error, salt){
@@ -58,18 +92,40 @@ function userLogin (req, res, next){
     })(req, res, next);
 }
 function newBlog (req, res){
-    var entry = new Blog({
-        headline : req.body.headline.toString(), 
-        date : req.body.date, 
-        content : req.body.content.toString(),  
+    console.log('newblog log', req.files)
+    var body = req.body.data
+    var file = req.files.data.file
+    var uploader = s3Client.uploadFile({
+        localFile: file.path, 
+        s3Params: {
+            Bucket: 'bearcreeklandscape',
+            Key: file.name, 
+            ACL : 'public-read'
+        }
     })
-    entry.save(function(saveErr, entry){
-        if(saveErr){ 
-            res.send({err:saveErr})
-        }
-        else {
-            res.send(entry)
-        }
+    uploader.on('progress', function(){
+        console.log('progress', uploader.progressAmount, uploader.progressTotal)
+    })
+    uploader.on('end', function(){
+        var url = s3.getPublicUrlHttp('bearcreeklandscape', file.name)
+        console.log('url loooggggging', url)
+        var entry = new Blog({
+            headline : body.headline.toString(), 
+            date : body.date, 
+            content : body.content.toString(),  
+            image : url || null
+        })
+        console.log('presave entry',entry)
+        entry.save(function(saveErr, entry){
+            if(saveErr){ 
+                console.log('save error', saveErr)
+                res.send({err:saveErr})
+            }
+            else {
+                console.log('success entry',entry)
+                res.send(entry)
+            }
+        })
     })
 }
 function getBlog (req, res){
@@ -96,7 +152,20 @@ function getImage (req, res){
         }
     })
 }
+function getClient(req, res){
+    Customer.find({}, function(err, array){
+        if(err){
+            console.log('client find error', err)
+            res.send({err:err})
+        }
+        else{
+            console.log('client results', array)
+            res.json(array)
+        }
+    })
+}
 function imgRemove (req, res){
+    console.log('image remove log', req.body)
     Photo.remove({_id: req.body._id}, function(err, photo){
         if(err){
             console.log("img remove error", err)
@@ -136,7 +205,7 @@ function newCustomer (req, res){
         else{
             console.log('start of else',client)
             sendgrid.send({
-                to: 'seanpbaillargeon@gmail.com',
+                to: 'justinjnoska@gmail.com',
                 from: client.email,
                 subject: 'New Information Request',
                 text: client.query + ' from: ' + client.name + ' phone number:' + client.number
@@ -157,7 +226,9 @@ module.exports = {
     newBlog : newBlog,
     getBlog : getBlog,
     getImage : getImage,
+    getClient : getClient,
     blogRemove : blogRemove,
     imgRemove : imgRemove,
     newCustomer : newCustomer,
+    imageLoad : imageLoad,
 }

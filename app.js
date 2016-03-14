@@ -6,6 +6,7 @@ var controller = require('./controllers/controller.js')
 var logger = require('morgan')
 var express = require('express')
 var sendgrid = require('sendgrid')
+var multiparty = require('connect-multiparty')
 //CREATE EXPRESS APP\\
 var app = express();
 mongoose.connect('mongodb://localhost/bcDB')
@@ -88,6 +89,9 @@ app.get('/api/blogContent', function(req, res){
 app.get('/api/imageContent', function(req, res){
     controller.getImage(req, res)
 })
+app.get('/api/clientContent', function(req, res){
+    controller.getClient(req, res)
+})
 app.post('/signUp', function(req, res){
     console.log('server signup log', req.body)
     controller.userSignup(req, res)
@@ -95,13 +99,17 @@ app.post('/signUp', function(req, res){
 app.post('/logIn', function(req, res){
     controller.userLogin(req, res)
 })
-app.post('/imgremove', function(req, res){
+app.post('/api/imgremove', function(req, res){
     controller.imgRemove(req, res)
+})
+app.post('/api/image', multiparty(), function(req, res){
+    console.log('api/image route',req.files)
+    controller.imageLoad(req, res)
 })
 app.post('/blogremove', function(req, res){
     controller.blogRemove(req, res)
 })
-app.post('/api/submitblog', function(req, res){
+app.post('/api/submitblog', multiparty(), function(req, res){
     controller.newBlog(req, res)
 })
 app.post('/api/customer', function(req, res){

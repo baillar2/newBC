@@ -1,6 +1,7 @@
 <div class="row">	
 	<h2>What's New</h2>
 	<div class="" ng-repeat="post in blogArray">
+		<img ng-show="post.image" ng-src="{{post.image}}">
 		<h4>{{post.headline}}</h4>
 		<p>{{post.date | date:longDate}}</p>
 		<p>{{post.content}}</p>

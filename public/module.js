@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute'])
+angular.module('app', ['ngRoute', 'ngFileUpload'])
 	
 	.config(function($routeProvider){
 		$routeProvider
@@ -30,6 +30,12 @@ angular.module('app', ['ngRoute'])
 				templateUrl: './partials/adminImage.html',
 				controller: 'adminController'
 			})
+			.when('/adminclient',{
+				templateUrl: './partials/adminclient.html'
+			})
+			.otherwise({
+				templateUrl: './partials/about.html'
+			})
 	})
 angular.module('app')
 	.factory('factory', [function(){
@@ -37,6 +43,7 @@ angular.module('app')
 		blogArray = []
 		imageArray = []
 		clientArray = []
+		
 		verify = function(serverData){
 				console.log('verify function')
 				if(!serverData.data.user){
