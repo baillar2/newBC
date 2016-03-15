@@ -104,8 +104,8 @@ angular.module('app')
 			})
 			
 		}
-		s.blogRemove = function(){
-			$http.post('/blogremove')
+		s.blogRemove = function(post){
+			$http.post('/blogremove', post)
 				.then(function(serverData){
 					console.log(serverData.data)
 					$http.get('/api/blogContent')
