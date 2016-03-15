@@ -4,12 +4,12 @@ var bcrypt = require('bcryptjs')
 var passport = require('passport')
 var Photo = require('../models/image.js')
 var Customer = require('../models/customer.js')
-var sendgrid = require('sendgrid')('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')
+var sendgrid = require('sendgrid')('key')
 var s3 = require('s3')
 s3Client = s3.createClient({
     s3Options:{
-        accessKeyId: 'AKIAIMMRHWRUTHZ4MTAQ',
-        secretAccessKey: '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', 
+        accessKeyId: 'key',
+        secretAccessKey: 'key', 
     }
 })
 function imageLoad(req, res){
