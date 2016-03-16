@@ -9,8 +9,7 @@
 	<form class"col-xs-10 col-xs-offset-1" ng-submit="submitImage()">	
 		<div class="form-group">
 	    	<label for="entryImage">Photo Input</label>
-	    	<input type="file" ng-model="image.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-select ngf-resize="{width: 800, quality:0.8}" ngf-resize-if="resizeCheck($image.file, $width, $height)"
-	    	>
+	    	<input type="file" ng-model="image.file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-select ngf-resize="{quality:0.8}" ngf-resize-if="$width > 10">
 	    	<p class="help-block">Choose a photo your gallery.</p>
 	    </div>
 	    	<button type="submit" class="btn btn-default">Submit</button>
