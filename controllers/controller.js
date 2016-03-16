@@ -113,7 +113,7 @@ function newBlog (req, res){
         var entry = new Blog({
             headline : body.headline.toString(), 
             date : body.date, 
-            content : body.content.replace(/\n/g, "<br>"),  
+            content : body.content.split('\r\n'),  
             image : url || null
         })
         console.log('presave entry',entry)

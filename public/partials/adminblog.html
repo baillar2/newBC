@@ -35,7 +35,7 @@
 			<img ng-src="{{post.image}}">
 			<h4>{{post.headline}}</h4>
 			<p>{{post.date | date:longDate}}</p>
-			<p>{{post.content}}</p>
+			<p ng-repeat="line in post.content">{{line}}</p>
 			<button class="btn-warning" ng-click="blogRemove(post)">Remove Blog</button>
 		</div>
 	</div>		

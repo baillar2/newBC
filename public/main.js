@@ -94,7 +94,7 @@ angular.module('app')
 			var uploader = Upload.upload({
 								url:'/api/submitblog',
 								data: {
-									file: s.entry.file.file,
+									file: s.entry.file.file || null,
 									data: s.entry
 								}
 							})
