@@ -32,7 +32,7 @@
 			<h2>Blog Archive</h2>
 		</div>
 		<div ng-repeat="post in blogArray">
-			<img ng-src="{{post.image}}">
+			<img style="max-height:200px" ng-src="{{post.image}}">
 			<h4>{{post.headline}}</h4>
 			<p>{{post.date | date:longDate}}</p>
 			<p ng-repeat="line in post.content">{{line}}</p>

@@ -93,41 +93,60 @@ function userLogin (req, res, next){
     })(req, res, next);
 }
 function newBlog (req, res){
-    console.log('newblog log', req.files)
-    var body = req.body.data
-    var file = req.files.data.file
-    var uploader = s3Client.uploadFile({
-        localFile: file.path, 
-        s3Params: {
-            Bucket: 'bearcreeklandscape',
-            Key: file.name, 
-            ACL : 'public-read'
-        }
-    })
-    uploader.on('progress', function(){
-        console.log('progress', uploader.progressAmount, uploader.progressTotal)
-    })
-    uploader.on('end', function(){
-        var url = s3.getPublicUrlHttp('bearcreeklandscape', file.name)
-        console.log('url loooggggging', url)
+    if(req.files.data){
+        console.log('newblog log', req.files)
+        var body = req.body.data
+        var file = req.files.data.file 
+        var uploader = s3Client.uploadFile({
+            localFile: file.path, 
+            s3Params: {
+                Bucket: 'bearcreeklandscape',
+                Key: file.name, 
+                ACL : 'public-read'
+            }
+        })
+        uploader.on('progress', function(){
+            console.log('progress', uploader.progressAmount, uploader.progressTotal)
+        })
+        uploader.on('end', function(){
+            var url = s3.getPublicUrlHttp('bearcreeklandscape', file.name)
+            console.log('url loooggggging', url)
+            var entry = new Blog({
+                headline : body.headline.toString(), 
+                date : body.date, 
+                content : body.content.split('\r\n'),  
+                image : url || null
+            })
+            console.log('presave entry',entry)
+            entry.save(function(saveErr, entry){
+                if(saveErr){ 
+                    console.log('save error', saveErr)
+                    res.send({err:saveErr})
+                }
+                else {
+                    console.log('success entry',entry)
+                    res.send(entry)
+                }
+            })
+        }) }
+    else {
+        console.log('else req.body', req.body)
         var entry = new Blog({
-            headline : body.headline.toString(), 
-            date : body.date, 
-            content : body.content.split('\r\n'),  
-            image : url || null
+            headline : req.body.data.headline.toString(),
+            date : req.body.data.date, 
+            content : req.body.data.content.split('\r\n')
         })
-        console.log('presave entry',entry)
         entry.save(function(saveErr, entry){
-            if(saveErr){ 
-                console.log('save error', saveErr)
-                res.send({err:saveErr})
-            }
-            else {
-                console.log('success entry',entry)
-                res.send(entry)
-            }
-        })
-    })
+                if(saveErr){ 
+                    console.log('save error', saveErr)
+                    res.send({err:saveErr})
+                }
+                else {
+                    console.log('success entry',entry)
+                    res.send(entry)
+                }
+            })
+    }
 }
 function getBlog (req, res){
     Blog.find({}, function(err, array){

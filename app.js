@@ -118,7 +118,7 @@ app.post('/api/customer', function(req, res){
 
 //LISTEN\\
 
-var port = 
+var port = 3000
 app.listen(port, function(){
 	console.log('server running on port ' + port)
 
