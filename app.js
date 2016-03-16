@@ -118,7 +118,7 @@ app.post('/api/customer', function(req, res){
 
 //LISTEN\\
 
-var port = 80
+var port = 
 app.listen(port, function(){
 	console.log('server running on port ' + port)
 

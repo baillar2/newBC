@@ -91,10 +91,11 @@ angular.module('app')
 		}
 		s.submitBlog = function(){
 			console.log(s.entry)
+			var file = s.entry.file || null
 			var uploader = Upload.upload({
 								url:'/api/submitblog',
 								data: {
-									file: s.entry.file.file || null,
+									file: file,
 									data: s.entry
 								}
 							})
